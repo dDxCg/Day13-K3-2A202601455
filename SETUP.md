@@ -1,3 +1,7 @@
+cls
+
+clsclscl
+
 # Chuẩn bị môi trường
 
 ## Yêu cầu
