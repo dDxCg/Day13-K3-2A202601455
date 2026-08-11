@@ -24,15 +24,15 @@
 ## 4. Prompt versioning
 
 - Prompt name: `day13-chat`
-- Version/label baseline: version 1, labels `baseline` + `production`
-- Version/label candidate: version 2, labels `candidate` (thêm câu "Answer in at most 3 sentences.")
+- Version/label baseline: version 3, label `baseline` (giữ nguyên template gốc `Feature={{feature}}\nDocs={{docs}}\nQuestion={{message}}`)
+- Version/label candidate: version 4, label `candidate` (đổi format: hướng dẫn trả lời tối đa 3 câu, thêm system framing)
 - Trace ID của mỗi version:
-  - label=baseline → `req-50b7f2db` (tokens_out=150)
-  - label=candidate → `req-6f9818a9` (tokens_out=96)
-- Bằng chứng đổi label hoặc rollback: xem `submission/evidence/prompt_versioning_evidence.txt`
-  - Đổi `production` sang v2 → request `req-44f73187`
-  - Rollback `production` về v1 → request `req-03922c3c`
-  - Thực hiện qua Langfuse SDK (`scripts/setup_prompt_versions.py`, `scripts/swap_prompt_label.py`), xác nhận labels trước/sau mỗi bước
+  - label=baseline (v3): trace `8e8f65f7a0fe16652887aa4af376be7d` (session `role2-baseline-02`)
+  - label=candidate (v4): trace `e9cb90002499b2e474da1592221691e1` (session `role2-candidate-02`)
+- Bằng chứng đổi label hoặc rollback:
+  - Đổi `production` từ v3 → v4: trace `83954cee5dfe63a7d1bf512123b1cbdd` (session `role2-promoted-01`), metadata xác nhận `prompt_label=production, prompt_version=4`
+  - Rollback `production` từ v4 → v3: trace `850c46ddf7cf947cc5d15b19c27ea361` (session `role2-rollback-02`), metadata xác nhận `prompt_label=production, prompt_version=3`
+  - [Cần bổ sung: ảnh chụp màn hình Langfuse UI cho 2 trace trên và danh sách prompt version — evidence dạng ảnh vẫn bắt buộc theo SUBMISSION.md]
 
 ## 5. Dashboard, SLO và alerts
 
