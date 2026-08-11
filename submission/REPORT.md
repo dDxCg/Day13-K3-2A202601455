@@ -2,10 +2,15 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
-- Repository URL:
+- Tên nhóm: VGO
+- Repository URL: [github.com/dDxCg/Day13-K3-Observability.git](https://github.com/dDxCg/Day13-K3-Observability.git)
 - Commit SHA cuối:
-- Thành viên và vai trò:
+- Thành viên và vai trò:| Tên                | Vai trò                 | Phạm vi chính                                 | Evidence phải bàn giao                     |
+  | ------------------- | ------------------------ | ----------------------------------------------- | -------------------------------------------- |
+  | Nguyễn Thanh Hoàn | Logging & PII            | correlation ID, metadata, JSON log, redaction   | log hợp lệ và bằng chứng không lộ PII |
+  | Đỗ Tuấn Kiệt    | Tracing & Prompt Version | traces, metadata, prompt v1/v2, label/rollback  | trace gắn đúng prompt version             |
+  | Lương Thanh Trang | Dashboard, SLO & Alert   | 6 panel, threshold, SLO, alert và runbook      | validator + ảnh dashboard                   |
+  | Đỗ Đức Cường  | Incident, Report & Demo  | chạy challenge, nối metrics → traces → logs | root cause, fix và demo cuối               |
 
 ## 2. Kết quả kỹ thuật
 
@@ -37,9 +42,13 @@
 ## 5. Dashboard, SLO và alerts
 
 - Kết quả `validate_dashboard.py`: `HỢP LỆ: 6/6 panel có trong dashboard contract.` (xem `submission/evidence/validate_dashboard_output.txt`)
-- Evidence dashboard: `submission/evidence/dashboard_baseline.png` — 6 panel (latency P50/95/99, traffic, error, cost, tokens, quality), time range 60 phút, refresh 30s, mỗi panel có dòng SLO
-- SLO đã chọn và lý do: theo `config/slo.yaml` — P95 latency ≤ 3000ms, error rate ≤ 2%, cost ngày ≤ 2.5 USD, quality mean ≥ 0.75 (giữ nguyên baseline mặc định của repo, phù hợp fake-LLM traffic thấp)
-- Alert rules và runbook: xem `config/alert_rules.yaml` và `docs/alerts.md`
+- Evidence dashboard: `submission/evidence/dashboard_baseline.png` — 6 panel (latency P50/95/99, traffic, error, cost, tokens, quality), time range 60 phút, refresh 30s, mỗi panel có dòng threshold/SLO
+- SLO đã chọn và lý do (`config/slo.yaml`):
+  - `latency_p95_ms` ≤ 3000ms (target 99.5%): baseline thực đo P50=584ms/P95=644ms/P99=668ms trên 24 request `response_sent` trong `data/logs.jsonl`; đặt 3000ms để có headroom phát hiện incident kiểu `rag_slow` mà không quá lỏng.
+  - `error_rate_pct` ≤ 2% (target 99.0%): baseline 0/24 request lỗi; ngưỡng 2% là chuẩn phổ biến cho API, đủ nhạy để bắt `ElevatedErrorRate`.
+  - `daily_cost_usd` ≤ 2.5 USD (target 100%): baseline 24 request tốn 0.048 USD; 2.5 USD/ngày để dư biên khi load test tăng concurrency mà vẫn cảnh báo được trước khi vượt ngân sách.
+  - `quality_score_avg` ≥ 0.75 (target 95%): baseline trung bình 0.88; đặt 0.75 làm sàn cảnh báo sớm khi chất lượng suy giảm rõ rệt so với baseline.
+- Alert rules và runbook: `config/alert_rules.yaml` (HighLatencyP95, ElevatedErrorRate, DailyCostBudgetBreach — cả 3 dựa trên triệu chứng/SLO, không dựa tên implementation nội bộ) với chi tiết điều kiện, user impact, 3 bước kiểm tra đầu, mitigation và owner tại `docs/alerts.md`.
 
 ## 6. Điều tra challenge
 
@@ -56,5 +65,5 @@
 Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
-|---|---|---|---|
-| | | | |
+| ------------ | ----------- | --------- | ---------------- |
+|              |             |           |                  |
