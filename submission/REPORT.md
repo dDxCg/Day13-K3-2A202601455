@@ -4,7 +4,7 @@
 
 - Tên nhóm: VGO
 - Repository URL: https://github.com/dDxCg/Day13-K3-2A202601455
-- Commit SHA cuối:
+- Commit SHA cuối: 902b47f2bc0624e9e8d604dfc6741ec3fa9fb6a8
 
 ## 2. Kết quả kỹ thuật
 
