@@ -64,6 +64,9 @@
 
 Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
-| Thành viên | Phần việc | Commit/PR | Điều đã học |
-| ------------ | ----------- | --------- | ---------------- |
-|              |             |           |                  |
+| Thành viên        | Phần việc                                                                            | Commit/PR                                                                                     | Điều đã học                                                                                                                       |
+| ------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Nguyễn Thanh Hoàn | Logging & PII: correlation ID, metadata, JSON log, redaction                           | `032f11b` loggin and pII                                                                    | Cách chuẩn hoá log JSON có correlation ID xuyên suốt request và redact PII (email, số điện thoại, thẻ) trước khi ghi log |
+| Đỗ Tuấn Kiệt    | Tracing & Prompt Version: tạo traces, metadata, prompt v1/v2, đổi label/rollback    | `7b1506b` Tracing & Prompt Version                                                          | Cách gắn prompt_name/prompt_label/prompt_version vào trace trên Langfuse và quy trình promote/rollback prompt an toàn           |
+| Lương Thanh Trang | Dashboard, SLO & Alert: dựng 6 panel, threshold, SLO, alert và runbook               | `c7e6ed1` checkpoint 2                                                                      | Cách xác định SLO dựa trên baseline thực đo và viết alert rule theo triệu chứng thay vì theo tên implementation nội bộ |
+| Đỗ Đức Cường  | Incident, Report & Demo: merge nhánh, chạy challenge, nối metrics → traces → logs | `8702c4e` Merge pull request #1 from dDxCg/hoan, `d874629` Merge branch 'main' into trang | Cách khoanh vùng root cause bằng cách nối dữ liệu giữa metrics, trace và log                                                  |
