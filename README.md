@@ -22,14 +22,14 @@ Trong lab 4 giờ này, bạn sẽ biến một API AI chạy được nhưng kh
 
 ## Luồng làm bài bắt buộc
 
-| Mốc | Làm gì | Tự kiểm tra | Evidence |
-|---|---|---|---|
-| Setup | Cài Python, cấu hình Langfuse chung/cloud; Docker local chỉ khi cần | `/health` trả `ok: true` | ảnh health và môi trường không lộ key |
-| Logging & PII | Hoàn thiện correlation ID, metadata và redaction | `python scripts/validate_logs.py` đạt ít nhất 80/100 | log có correlation ID và log đã che PII |
-| Trace & Prompt Version | Tạo prompt v1/v2, chạy cùng input với hai label | trace có `prompt_name`, `prompt_label`, `prompt_version` | hai trace ID và ảnh đổi label/rollback |
-| Dashboard & SLO | Dựng đúng 6 panel từ `data/logs.jsonl` | `python scripts/validate_dashboard.py` báo `6/6 panel` | ảnh dashboard có time range, đơn vị, threshold |
-| Challenge | Chỉ chạy sau khi Lab Coach release file chính thức | nối được Metrics → Traces → Logs | root cause, fix và preventive measure |
-| Nộp bài | Hoàn thiện report, tests và Git | `python -m pytest -q` | repo URL, commit SHA và `submission/` |
+| Mốc                   | Làm gì                                                                 | Tự kiểm tra                                                  | Evidence                                            |
+| ---------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------- | --------------------------------------------------- |
+| Setup                  | Cài Python, cấu hình Langfuse chung/cloud; Docker local chỉ khi cần | `/health` trả `ok: true`                                  | ảnh health và môi trường không lộ key        |
+| Logging & PII          | Hoàn thiện correlation ID, metadata và redaction                      | `python scripts/validate_logs.py` đạt ít nhất 80/100     | log có correlation ID và log đã che PII         |
+| Trace & Prompt Version | Tạo prompt v1/v2, chạy cùng input với hai label                      | trace có`prompt_name`, `prompt_label`, `prompt_version` | hai trace ID và ảnh đổi label/rollback          |
+| Dashboard & SLO        | Dựng đúng 6 panel từ`data/logs.jsonl`                              | `python scripts/validate_dashboard.py` báo `6/6 panel`    | ảnh dashboard có time range, đơn vị, threshold |
+| Challenge              | Chỉ chạy sau khi Lab Coach release file chính thức                   | nối được Metrics → Traces → Logs                         | root cause, fix và preventive measure              |
+| Nộp bài              | Hoàn thiện report, tests và Git                                       | `python -m pytest -q`                                        | repo URL, commit SHA và`submission/`             |
 
 Chi tiết thời gian và tiêu chí qua từng mốc nằm ngay trong [CHECKPOINTS.md](CHECKPOINTS.md); cấu trúc nộp bài nằm trong [SUBMISSION.md](SUBMISSION.md).
 
@@ -83,12 +83,12 @@ submission/   báo cáo và evidence phải nộp
 
 ## Phân vai nhóm — tối đa 4 vai trò
 
-| Vai trò | Phạm vi chính | Evidence phải bàn giao |
-|---|---|---|
-| Logging & PII | correlation ID, metadata, JSON log, redaction | log hợp lệ và bằng chứng không lộ PII |
-| Tracing & Prompt Version | traces, metadata, prompt v1/v2, label/rollback | trace gắn đúng prompt version |
-| Dashboard, SLO & Alert | 6 panel, threshold, SLO, alert và runbook | validator + ảnh dashboard |
-| Incident, Report & Demo | chạy challenge, nối metrics → traces → logs | root cause, fix và demo cuối |
+| Vai trò                 | Phạm vi chính                                 | Evidence phải bàn giao                     |
+| ------------------------ | ----------------------------------------------- | -------------------------------------------- |
+| Logging & PII            | correlation ID, metadata, JSON log, redaction   | log hợp lệ và bằng chứng không lộ PII |
+| Tracing & Prompt Version | traces, metadata, prompt v1/v2, label/rollback  | trace gắn đúng prompt version             |
+| Dashboard, SLO & Alert   | 6 panel, threshold, SLO, alert và runbook      | validator + ảnh dashboard                   |
+| Incident, Report & Demo  | chạy challenge, nối metrics → traces → logs | root cause, fix và demo cuối               |
 
 Một người có thể giữ hai vai trò khi nhóm ít người; không tách thêm vai trò chỉ để chia nhỏ đầu việc.
 

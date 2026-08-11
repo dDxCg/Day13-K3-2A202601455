@@ -4,7 +4,8 @@ slis:
   latency_p95_ms:
     objective: 3000
     target: 99.5
-    note: Replace with your group's target
+    # Baseline (no incident) P95 ~644ms across 24 requests; 3000ms gives
+    # headroom to catch rag_slow-style incidents before breaching.
   error_rate_pct:
     objective: 2
     target: 99.0
