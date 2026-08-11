@@ -2,10 +2,9 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
-- Repository URL:
+- Tên nhóm: VGO
+- Repository URL: https://github.com/dDxCg/Day13-K3-2A202601455
 - Commit SHA cuối:
-- Thành viên và vai trò:
 
 ## 2. Kết quả kỹ thuật
 
@@ -43,18 +42,21 @@
 
 ## 6. Điều tra challenge
 
-- Challenge ID:
-- Triệu chứng từ metrics:
-- Trace ID liên quan:
-- Log line/correlation ID liên quan:
-- Root cause:
-- Fix action:
-- Preventive measure:
+- Challenge ID: config/challange.json
+- Triệu chứng từ metrics: latency p95/p99 tăng mạnh từ ~500ms lên 2500 - 3000ms
+- Trace ID liên quan: e918f5bc9c2c19432dc6f5495c02db2a
+- Log line/correlation ID liên quan: req-1eb04b3f
+- Root cause: incident rag_slow bật STATE["rag_slow"], khiến retrieve() trong app/mock_rag.py sleep đồng bộ 2.5s mỗi request feature=refund; log response_sent khớp latency_ms ~2500-2900, không kèm error_type, trace xác nhận span retrieval/generation chiếm gần hết thời gian
+- Fix action: inject_incident.py --disable để khôi phục baseline; về lâu dài thêm timeout cho vector store call + cache kết quả retrieval hay dùng, tránh block đồng bộ toàn request
+- Preventive measure: Tách riêng span đo thời gian retrieval trong trace (hiện gộp chung GENERATION), thêm alert theo span-level latency thay vì chỉ tổng latency, và thêm timeout cứng ở tầng retrieve() để lỗi fail-fast thay vì treo 2.5s
 
 ## 7. Đóng góp cá nhân
 
 Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
-| Thành viên | Phần việc | Commit/PR | Điều đã học |
+| Thành viên | Phần việc | Commit/PR |
 |---|---|---|---|
-| | | | |
+| Nguyễn Thanh Hoàn | PII mask và Structured log | https://github.com/dDxCg/Day13-K3-2A202601455/pull/1 |
+| Lương Thanh Trang | Dashboard, SLO | https://github.com/dDxCg/Day13-K3-2A202601455/pull/2 |
+| Đỗ Tuấn Kiệt | tracing and prompt version | 7b1506b8e2cbd31ad7a7607129a522094a0c26bb | 
+| Đỗ Đức Cường | trace incident | 0aad354d97ba1094954a0e09267662298da0126d |
