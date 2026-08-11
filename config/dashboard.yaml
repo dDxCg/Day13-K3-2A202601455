@@ -1,6 +1,6 @@
 dashboard:
   schema_version: 1
-  title: Day 13 AI Observability
+  title: VGO - AI Observability
   time_range_minutes: 60
   refresh_seconds: 30
   panels:

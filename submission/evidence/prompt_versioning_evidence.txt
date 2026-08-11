@@ -1,0 +1,39 @@
+Day 13 K3 — Prompt versioning evidence (day13-chat)
+Created via Langfuse SDK (scripts/setup_prompt_versions.py, scripts/swap_prompt_label.py)
+
+1) Created versions
+   Created v1: version=1 labels=['baseline', 'production', 'latest']
+   Created v2: version=2 labels=['candidate', 'latest']
+   v2 template adds: "Answer in at most 3 sentences." (format-only change, not graded on quality)
+
+2) Requests run against explicit labels (server restarted with LANGFUSE_PROMPT_LABEL set)
+   label=baseline  -> correlation_id=req-50b7f2db  tokens_out=150
+   label=candidate -> correlation_id=req-6f9818a9  tokens_out=96
+   (Both traces visible in Langfuse under trace metadata: prompt_name=day13-chat,
+    prompt_label matches the label used, prompt_version 1 vs 2 respectively.)
+
+3) Before label swap
+   v1 labels ['baseline', 'production']
+   v2 labels ['candidate', 'latest']
+
+4) Swap: moved 'production' label to v2
+   Command: python scripts/swap_prompt_label.py --version 2 --labels candidate production
+   Result:  Updated version=2 labels=['candidate', 'production', 'latest']
+   After swap:
+     v1 labels ['baseline']
+     v2 labels ['candidate', 'production', 'latest']
+   Request run with default LANGFUSE_PROMPT_LABEL=production (now resolves to v2):
+     correlation_id=req-44f73187  tokens_out=174
+
+5) Rollback: moved 'production' label back to v1
+   Command: python scripts/swap_prompt_label.py --version 1 --labels baseline production
+   Result:  Updated version=1 labels=['baseline', 'production']
+   After rollback:
+     v1 labels ['baseline', 'production']
+     v2 labels ['candidate', 'latest']
+   Request run with default LANGFUSE_PROMPT_LABEL=production (now resolves back to v1):
+     correlation_id=req-03922c3c  tokens_out=165
+
+Trace IDs to open in Langfuse for grading: req-50b7f2db, req-6f9818a9, req-44f73187, req-03922c3c
+Each trace's metadata panel shows prompt_name=day13-chat, prompt_label, prompt_version confirming
+the resolved version matches the label active at request time.
